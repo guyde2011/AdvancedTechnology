@@ -1,0 +1,16 @@
+
+itemGroup.AdvTech=Advanced Technology
+item.test1234.name=IDK what are you talking about , a test item?
+item.safer.name=Electromagnetic Deflector
+item.safer_emerald.name=Electromagnetic Deflected Emerald
+item.rs_emerald.name=Enthium Gem
+item.rs_emerald_safer.name=Stablized Enthium Gem
+item.gem_coil.name=Enthium Conductance Coil
+item.stone_stick.name=Stone Stick
+item.energized_quartz.name=Destablized Quartz
+item.enriched_enderium.name=Enriched Enderium
+fluid.wither_juice=Wither Essence (aka Wither Juice)
+item.dim_ingot.name=Dimensional Ingot
+item.wl_signalium.name=Wireless Signalium
+item.link_binder.name=Terminal Binder
+tile.Block_Link.name=Link Terminal
