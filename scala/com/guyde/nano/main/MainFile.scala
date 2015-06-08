@@ -44,9 +44,10 @@ import com.guyde.nano.network.ServerToClientMessage
 import com.guyde.nano.network.ServerCommandsHandler
 import com.guyde.nano.network.ClientToServerMessage
 import com.guyde.nano.network.PacketCommandsRegistry
-import com.guyde.nano.network.PerspectiveSummonCommand
 import com.guyde.nano.main.ClientProxy
 import com.guyde.nano.network.MessageCommand
+import com.guyde.nano.main.GuiBook
+import com.guyde.nano.render.RenderLaserGrav2
 
 
   
@@ -66,6 +67,7 @@ import com.guyde.nano.network.MessageCommand
     override def registerRenderers(){
       ClientRegistry.bindTileEntitySpecialRenderer(classOf[EntityTarget], new TargetRenderer())
       ClientRegistry.bindTileEntitySpecialRenderer(classOf[TileEntityLaserGrav], new RenderLaserGrav())
+      ClientRegistry.bindTileEntitySpecialRenderer(classOf[TileEntityLaserGrav2], new RenderLaserGrav2())
       RenderingRegistry.registerEntityRenderingHandler(classOf[EntityExplodeBug], new RenderExplodeBug(new ModelExplodeBug(),0.125f))
     }
   }
@@ -134,9 +136,13 @@ object AdvTechMod{
     new BlockTarget()
     dmg_up.reg
     bug.reg
+    NetworkRegistry.INSTANCE.registerGuiHandler(instance ,new GuiHandler())
+    NanoManual.reg
     new BlockLaserGrav()
+    new BlockLaserGrav2()
     TileEntity.addMapping(classOf[TileEntityLink], "advtech:link_terminal")
     TileEntity.addMapping(classOf[TileEntityLaserGrav],"advtech:laser_grav")
+    TileEntity.addMapping(classOf[TileEntityLaserGrav2],"advtech:laser_grav2")
         wl_signalium.reg
     ItemRegistry.load
     Proxy = proxy
@@ -168,8 +174,8 @@ new CommonProxy().registerEntities()
     GameRegistry.addRecipe(new ModifierToolRecipe())
     FMLCommonHandler.instance().bus().register(new Handler());
     MinecraftForge.EVENT_BUS.register(new Handler());
-    MinecraftForge.EVENT_BUS.register(new GuiBug);
-    PacketCommandsRegistry.instance.registerMessageCommand(classOf[PerspectiveSummonCommand])
+    //MinecraftForge.EVENT_BUS.register(new GuiBug);
+
   }
   
   def sendCommand(cmd : MessageCommand ){

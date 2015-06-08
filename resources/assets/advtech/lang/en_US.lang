@@ -14,3 +14,6 @@ item.dim_ingot.name=Dimensional Ingot
 item.wl_signalium.name=Wireless Signalium
 item.link_binder.name=Terminal Binder
 tile.Block_Link.name=Link Terminal
+tile.lasergrav.name=Anti-Gravitation Laser
+tile.lasergrav2.name=Gravitation Laser
+item.exp_bug.name=Explosive Bug

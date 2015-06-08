@@ -24,22 +24,22 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import cpw.mods.fml.relauncher.SideOnly
 import cpw.mods.fml.relauncher.Side
 
-class BlockLaserGrav() extends BlockContainer(Material.iron){
+class BlockLaserGrav2() extends BlockContainer(Material.iron){
   def createNewTileEntity(world : World , int : Int) : TileEntity = {
-    return new TileEntityLaserGrav()
+    return new TileEntityLaserGrav2()
   }
-  this.setBlockName("lasergrav")
+  this.setBlockName("lasergrav2")
   this.setHardness(2.0f)
   this.setHarvestLevel("pickaxe",1)
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(register : IIconRegister) {
-    blockIcon = register.registerIcon("advtech:laserdummy")
+    blockIcon = register.registerIcon("advtech:laserdummy2")
   }
   override def getIcon(i : Int , j : Int) : IIcon = {
     // TODO Auto-generated method stub
     return blockIcon;
   }
-  GameRegistry.registerBlock(this, "laser_grav")
+  GameRegistry.registerBlock(this, "laser_grav2")
      override def isOpaqueCube() : Boolean =  {
              return false;
              
@@ -51,10 +51,10 @@ class BlockLaserGrav() extends BlockContainer(Material.iron){
      }
      override def onBlockActivated(world : World, x : Int, y : Int, z : Int, player : EntityPlayer, meta : Int, tX : Float , tY : Float , tZ : Float) : Boolean = {
        if (player.getHeldItem!=null && player.getHeldItem.getItem==Items.stick ){
-         world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav].power = world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav].power+1
-         if (world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav].power==16) world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav].power = 0
+         world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav2].power = world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav2].power+1
+         if (world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav2].power==16) world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav2].power = 0
          if (!world.isRemote)
-         player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.AQUA+"The Laser's power set to "+EnumChatFormatting.GREEN+world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav].power))
+         player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.AQUA+"The Laser's power set to "+EnumChatFormatting.GREEN+world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav2].power))
        }
        return true
      }
@@ -65,12 +65,12 @@ class BlockLaserGrav() extends BlockContainer(Material.iron){
   override def onNeighborBlockChange(world : World, x : Int, y : Int,  z : Int, block : Block) {
      
     if(world.isBlockIndirectlyGettingPowered(x, y, z)) {
-        world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav].on=true
+        world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav2].on=true
         
 
       }else{
      
-        world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav].on=false
+        world.getTileEntity(x, y, z).asInstanceOf[TileEntityLaserGrav2].on=false
 
       }
     
@@ -79,7 +79,7 @@ class BlockLaserGrav() extends BlockContainer(Material.iron){
       
 }
 
-class TileEntityLaserGrav() extends TileEntity(){
+class TileEntityLaserGrav2() extends TileEntity(){
   
   private var _on : Boolean = false
   
@@ -129,8 +129,11 @@ class TileEntityLaserGrav() extends TileEntity(){
     var ents = this.worldObj.getEntitiesWithinAABB(classOf[Entity], AxisAlignedBB.getBoundingBox(this.xCoord, this.yCoord, this.zCoord, this.xCoord+1, this.yCoord+power+1, this.zCoord+1))
       ents.foreach{e => e.asInstanceOf[Entity].fallDistance=0; 
       if (!e.isInstanceOf[EntityPlayer] || !e.asInstanceOf[EntityPlayer].isSneaking()){
-        e.asInstanceOf[Entity].moveEntity(0, 0.1, 0); 
-        e.asInstanceOf[Entity].motionY=0.1f
+        e.asInstanceOf[Entity].moveEntity(0, -0.1, 0); 
+        e.asInstanceOf[Entity].motionY= -0.1d
+        } else {
+          e.asInstanceOf[Entity].moveEntity(0, 0.1, 0); 
+          e.asInstanceOf[Entity].motionY= 0.1d
         }
     }
     } else {

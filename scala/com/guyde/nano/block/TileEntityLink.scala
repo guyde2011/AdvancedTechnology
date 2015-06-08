@@ -1,5 +1,5 @@
 package com.guyde.nano.block
-
+import net.minecraft.block.BlockBeacon;
 import net.minecraft.block.Block
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
@@ -14,6 +14,9 @@ import net.minecraftforge.fluids.Fluid
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.FluidTankInfo
 import net.minecraftforge.fluids.IFluidHandler
+import net.minecraft.network.NetworkManager
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity
+import net.minecraft.network.Packet
 
 class BindedBlock(x : Int , y : Int , z : Int , world : World){
   def getBlock() : Block = {
@@ -141,7 +144,7 @@ class TileEntityLink() extends TileEntity() with ISidedInventory with IFluidHand
                 super.writeToNBT(tag);
                 tag.setBoolean("bind", false)
                 if (BindedBlock!=null){
-                  tag.setBoolean("true", false)
+                  tag.setBoolean("bind", true)
                    tag.setInteger("xbind",BindedBlock.getX)
                    tag.setInteger("ybind",BindedBlock.getY)
                    tag.setInteger("zbind",BindedBlock.getZ)
@@ -155,7 +158,16 @@ class TileEntityLink() extends TileEntity() with ISidedInventory with IFluidHand
           worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, this.getBlockType);
         }
         
-
+  override def getDescriptionPacket() : Packet = {
+    
+    var tag = new NBTTagCompound();
+    writeToNBT(tag)
+    return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 1, tag);
+  }
+   override def onDataPacket(net : NetworkManager , pkt : S35PacketUpdateTileEntity)
+   {
+       readFromNBT(pkt.func_148857_g());
+   }
 	override def getSizeInventory() : Int = {
 		// TODO Auto-generated method stub
 		var inv = this.getLinkedInv();

@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
+import net.minecraft.client.renderer.tileentity.TileEntityBeaconRenderer;
 public class BlockLink extends BlockLinkDema{
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {

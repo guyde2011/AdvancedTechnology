@@ -23,7 +23,6 @@ import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.EntityLiving
 import com.guyde.nano.network.PacketCommandsRegistry
-import com.guyde.nano.network.PerspectiveSummonCommand
 import net.minecraftforge.common.util.FakePlayer
 import net.minecraft.world.WorldServer
 import cpw.mods.fml.common.FMLCommonHandler
@@ -41,7 +40,7 @@ class Handler {
   @SubscribeEvent
   def blockDrops(event : HarvestDropsEvent){
     var evDrops = Array[ItemStack]() ++ event.drops
-    if (event.harvester != null) {
+    if (event.harvester != null && event.harvester.getHeldItem()!=null) {
      var item = event.harvester.getHeldItem()
       if (item.getItem.isInstanceOf[AdvTool]){
         var bool = true
@@ -77,20 +76,7 @@ class Handler {
   }
 
 
-  @SubscribeEvent
-  def onKeyPressed(event : KeyInputEvent){
-    if (KeyBinds.RenderExit.isPressed()){
-      ExtendedProps.getRenderFor(Minecraft.getMinecraft().thePlayer).perspective = Minecraft.getMinecraft().thePlayer
-    }
-    else if(Keyboard.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindForward.getKeyCode)){
-      event.setCanceled(true)
-      ExtendedProps.getRenderFor(Minecraft.getMinecraft().thePlayer).perspective.moveEntityWithHeading(0.025f, 0.5f)
-    }
-        else{
-      event.setCanceled(true)
 
-    }
-  }
   
   @SubscribeEvent
   def onEntityConstruct(event : EntityConstructing){
